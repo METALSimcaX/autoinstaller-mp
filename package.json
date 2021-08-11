@@ -1,0 +1,63 @@
+{
+    "name": "electron-update",
+    "version": "2.1.7",
+    "description": "Macropay POS Application",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "linux": "electron-builder -l --publish=never",
+        "windows": "electron-builder -w --publish=never",
+        "mac": "electron-builder"
+    },
+    "build": {
+        "appId": "Macropay Software",
+        "productName": "Macropay POS",
+        "artifactName": "Macropay POS.${ext}",
+        "copyright": "Copyright © 2021 Macropay",
+        "afterSign": "scripts/notarize.js",
+        "publish": [
+            {
+                "provider": "generic",
+                "url": "http://45.190.236.104:5000/release/"
+            }
+        ],
+        "win": {
+            "target": "nsis",
+            "icon": "build/icon.ico"
+        },
+        "nsis": {
+            "warningsAsErrors": false,
+            "installerIcon": "build/icon.ico",
+            "runAfterFinish": false,
+            "oneClick": false,
+            "perMachine": true,
+            "allowToChangeInstallationDirectory": true,
+            "include": "build/installer.nsh"
+        },
+        "mac": {
+            "entitlements": "build/entitlements.mac.plist",
+            "entitlementsInherit": "build/entitlements.mac.plist",
+            "hardenedRuntime": true,
+            "gatekeeperAssess": false,
+            "category": "public.app-category.productivity",
+            "target": [
+                "dmg",
+                "zip"
+            ]
+        }
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "electron": "^8.2.5",
+        "electron-builder": "^22.6.0",
+        "electron-notarize": "^1.0.0"
+    },
+    "dependencies": {
+        "custom-electron-titlebar": "^3.2.7",
+        "electron-log": "^4.1.2",
+        "electron-titlebar": "^0.0.3",
+        "electron-updater": "^4.3.1",
+        "path": "^0.12.7"
+    }
+}
